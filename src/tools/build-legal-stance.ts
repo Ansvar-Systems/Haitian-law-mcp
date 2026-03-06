@@ -95,10 +95,10 @@ export async function buildLegalStance(
     }
   }
 
-  // LIKE fallback — last resort when all FTS5 variants return empty
+  // LIKE fallback — final tier when FTS5 returns no results
   {
     const likePattern = buildLikePattern(sanitizeFtsInput(input.query));
-    let sql = `
+    let likeSql = `
       SELECT
         lp.document_id,
         ld.title as document_title,
@@ -109,20 +109,20 @@ export async function buildLegalStance(
         0 as relevance
       FROM legal_provisions lp
       JOIN legal_documents ld ON ld.id = lp.document_id
-      WHERE lp.content LIKE ? COLLATE NOCASE
+      WHERE lp.content LIKE ?
     `;
-    const params: (string | number)[] = [likePattern];
+    const likeParams: (string | number)[] = [likePattern];
 
     if (resolvedDocId) {
-      sql += ' AND lp.document_id = ?';
-      params.push(resolvedDocId);
+      likeSql += ' AND lp.document_id = ?';
+      likeParams.push(resolvedDocId);
     }
 
-    sql += ' LIMIT ?';
-    params.push(fetchLimit);
+    likeSql += ' LIMIT ?';
+    likeParams.push(fetchLimit);
 
     try {
-      const rows = db.prepare(sql).all(...params) as LegalStanceResult[];
+      const rows = db.prepare(likeSql).all(...likeParams) as LegalStanceResult[];
       if (rows.length > 0) {
         return {
           results: deduplicateResults(rows, limit),
@@ -133,7 +133,7 @@ export async function buildLegalStance(
         };
       }
     } catch {
-      // LIKE query failed — fall through to empty return
+      // LIKE query failed
     }
   }
 
