@@ -1,0 +1,47 @@
+# sources.yml
+schema_version: "1.0"
+mcp_name: "Haitian Law MCP"
+jurisdiction: "HT"
+
+sources:
+  - name: "DFRN — Direction des Affaires Juridiques et du Droit International"
+    authority: "République d'Haïti — Ministère de la Justice et de la Sécurité Publique"
+    official_portal: "https://www.dfrn.gouv.ht"
+    canonical_identifier: "DFRN document reference"
+    retrieval_method: "HTML_SCRAPE"
+    api_documentation: "N/A — HTML scraping of public portal"
+    update_frequency: "monthly"
+    last_ingested: "2026-01-01"
+    license_or_terms:
+      type: "Haitian Government Public Domain"
+      url: "https://www.dfrn.gouv.ht"
+      summary: "Haitian official legal publication portal; legislation is publicly accessible and may be freely used for research purposes"
+    coverage:
+      scope: "Major Haitian legislation including the Constitution de la République d'Haïti (1987 as amended), Code Civil haïtien, Code Pénal, and major statutes accessible via the DFRN portal (~24 key instruments)"
+      limitations: "Haiti's legal infrastructure has significant gaps due to political instability and natural disasters; many laws exist only in print form in the Le Moniteur official gazette (paper); no comprehensive data protection law exists in Haiti as of 2026; coverage limited to digitally accessible instruments on DFRN"
+    languages:
+      - "fr"
+      - "ht"
+
+  - name: "Le Moniteur — Journal Officiel de la République d'Haïti"
+    authority: "République d'Haïti — Secrétairerie d'État à la Communication"
+    official_portal: "https://www.lemoniteurhaiti.com"
+    canonical_identifier: "Numéro du Moniteur + date"
+    retrieval_method: "HTML_SCRAPE"
+    api_documentation: "N/A"
+    update_frequency: "irregular"
+    last_ingested: "PENDING"
+    license_or_terms:
+      type: "Haitian Government Public Domain"
+      url: "https://www.lemoniteurhaiti.com"
+      summary: "Official government gazette; primary authoritative source for all promulgated Haitian legislation"
+    coverage:
+      scope: "All officially promulgated legislation from publication date; historical issues since 1845"
+      limitations: "Digital archives are incomplete; many issues available only as scanned PDFs without full-text search; publication has been irregular due to political crises"
+    languages:
+      - "fr"
+
+data_freshness:
+  automated_checks: true
+  check_frequency: "weekly"
+  last_verified: "2026-01-01"
