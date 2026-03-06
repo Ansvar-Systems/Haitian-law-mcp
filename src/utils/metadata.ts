@@ -1,5 +1,5 @@
 /**
- * Response metadata utilities for Dominican Republic Law MCP.
+ * Response metadata utilities for Haitian Law MCP.
  */
 
 import type Database from '@ansvar/mcp-sqlite';
@@ -32,12 +32,12 @@ export function generateResponseMetadata(
   }
 
   return {
-    data_source: 'Dominican Republic Law (consultoria.gov.do) — National Council for Law Reporting',
-    jurisdiction: 'KE',
+    data_source: 'Haitian Law (lfrh.gouv.ht) — Le Fil de la Recherche en Haiti',
+    jurisdiction: 'HT',
     disclaimer:
-      'This data is sourced from Dominican Republic Law under Government Open Data principles. ' +
-      'The authoritative versions are in English. Swahili translations may be available for some documents. ' +
-      'Always verify with the official Dominican Republic Law portal (consultoria.gov.do).',
+      'This data is sourced from Haitian legal publications under public access principles. ' +
+      'The authoritative versions are in French. Haitian Creole translations may be available for some documents. ' +
+      'Always verify with the official Journal Officiel de la Republique d\'Haiti.',
     freshness,
   };
 }
