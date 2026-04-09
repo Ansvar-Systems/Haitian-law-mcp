@@ -1,5 +1,5 @@
 /**
- * Tool registry for El Salvador Law MCP Server.
+ * Tool registry for Haiti Law MCP Server.
  * 8 core tools (non-EU jurisdiction — no EU tools).
  */
 
@@ -20,6 +20,7 @@ import { checkCurrency, type CheckCurrencyInput } from './check-currency.js';
 import { listSources } from './list-sources.js';
 import { getAbout, type AboutContext } from './about.js';
 import { detectCapabilities, upgradeMessage } from '../capabilities.js';
+import { generateResponseMetadata } from '../utils/metadata.js';
 export type { AboutContext } from './about.js';
 
 const ABOUT_TOOL: Tool = {
@@ -36,7 +37,7 @@ const LIST_SOURCES_TOOL: Tool = {
     'Returns detailed provenance metadata for all data sources used by this server. ' +
     'Use this to understand what data is available, its authority, coverage scope, and known limitations. ' +
     'Also returns dataset statistics (document counts, provision counts) and database build timestamp. ' +
-    'Call this FIRST when you need to understand what Salvadoran legal data this server covers.',
+    'Call this FIRST when you need to understand what Haitian legal data this server covers.',
   inputSchema: { type: 'object', properties: {} },
 };
 
@@ -44,10 +45,10 @@ export const TOOLS: Tool[] = [
   {
     name: 'search_legislation',
     description:
-      'Search Salvadoran statutes and regulations by keyword using full-text search (FTS5 with BM25 ranking). ' +
+      'Search Haitian statutes and regulations by keyword using full-text search (FTS5 with BM25 ranking). ' +
       'Returns matching provisions with document context, snippets with >>> <<< markers around matched terms, and relevance scores. ' +
       'Supports FTS5 syntax: quoted phrases ("exact match"), boolean operators (AND, OR, NOT), and prefix wildcards (term*). ' +
-      'Results are primarily in Spanish. ' +
+      'Results are primarily in French or Haitian Creole. ' +
       'Default limit is 10 results. For broad topics, increase the limit. ' +
       'Do NOT use this for retrieving a known provision — use get_provision instead.',
     inputSchema: {
@@ -56,7 +57,7 @@ export const TOOLS: Tool[] = [
         query: {
           type: 'string',
           description:
-            'Search query in Spanish. Supports FTS5 syntax: ' +
+            'Search query in French or Haitian Creole. Supports FTS5 syntax: ' +
             '"exact phrase" for exact phrase, term* for prefix.',
         },
         document_id: {
@@ -80,7 +81,7 @@ export const TOOLS: Tool[] = [
   {
     name: 'get_provision',
     description:
-      'Retrieve the full text of a specific provision (section/article) from a Salvadoran statute. ' +
+      'Retrieve the full text of a specific provision (section/article) from a Haitian statute. ' +
       'Specify a document_id and optionally a section or provision_ref. ' +
       'Omit section/provision_ref to get ALL provisions in the statute (use sparingly — can be large). ' +
       'Subsection references like "13(1)" or "s29(2)(a)" resolve to the parent section. ' +
@@ -108,7 +109,7 @@ export const TOOLS: Tool[] = [
   {
     name: 'validate_citation',
     description:
-      'Validate a Salvadoran legal citation against the database — zero-hallucination check. ' +
+      'Validate a Haitian legal citation against the database — zero-hallucination check. ' +
       'Parses the citation, checks that the document and provision exist, and returns warnings about status. ' +
       'Use this to verify any citation BEFORE including it in a legal analysis.',
     inputSchema: {
@@ -125,7 +126,7 @@ export const TOOLS: Tool[] = [
   {
     name: 'build_legal_stance',
     description:
-      'Build a comprehensive set of citations for a legal question by searching across all Salvadoran statutes simultaneously. ' +
+      'Build a comprehensive set of citations for a legal question by searching across all Haitian statutes simultaneously. ' +
       'Returns aggregated results from multiple relevant provisions. ' +
       'Use this for broad legal questions rather than looking up a specific known provision.',
     inputSchema: {
@@ -151,7 +152,7 @@ export const TOOLS: Tool[] = [
   {
     name: 'format_citation',
     description:
-      'Format a Salvadoran legal citation per standard conventions. ' +
+      'Format a Haitian legal citation per standard conventions. ' +
       'Three formats: "full" (formal), "short" (abbreviated), "pinpoint" (section reference only).',
     inputSchema: {
       type: 'object',
@@ -170,7 +171,7 @@ export const TOOLS: Tool[] = [
   {
     name: 'check_currency',
     description:
-      'Check whether a Salvadoran statute or provision is currently in force, amended, or repealed. ' +
+      'Check whether a Haitian statute or provision is currently in force, amended, or repealed. ' +
       'Returns the document status, issued date, in-force date, and warnings. ' +
       'Essential before citing any provision — always verify currency.',
     inputSchema: {
@@ -265,7 +266,7 @@ export function registerTools(
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       return {
-        content: [{ type: 'text' as const, text: `Error: ${message}` }],
+        content: [{ type: 'text' as const, text: JSON.stringify({ error: message, _error_type: 'internal_error', _meta: generateResponseMetadata(db) }) }],
         isError: true,
       };
     }
