@@ -13,6 +13,7 @@ export interface SourceInfo {
   license: string;
   coverage: string;
   languages: string[];
+  status?: string;
 }
 
 export interface ListSourcesResult {
@@ -44,15 +45,25 @@ export async function listSources(
     results: {
       sources: [
         {
-          name: 'Dominican Republic Law',
-          authority: 'National Council for Law Reporting (Dominican Republic Law)',
-          url: 'http://consultoria.gov.do',
+          name: 'Direction des Affaires Juridiques et du Droit International (DFRN)',
+          authority: 'Ministry of Justice & Public Security, Haiti',
+          url: 'https://www.dfrn.gouv.ht',
           license: 'Government Open Data',
           coverage:
-            'All Acts of Parliament (revised edition), subsidiary legislation, ' +
-            'the Constitution of Dominican Republic (2010), Dominican Republic Gazette notices, and selected case law ' +
-            'from superior courts including the Supreme Court, Court of Appeal, and High Court',
-          languages: ['en', 'sw'],
+            'Approximately 24 key Haitian legal instruments including the Constitution, Civil Code, and Penal Code. ' +
+            'Many laws exist only in print in Le Moniteur gazette.',
+          languages: ['fr', 'ht'],
+        },
+        {
+          name: 'Le Moniteur — Journal Officiel de la République d\'Haïti',
+          authority: 'Secretariat of State for Communication, Haiti',
+          url: 'https://www.lemoniteurhaiti.com',
+          license: 'Government Open Data',
+          coverage:
+            'All officially promulgated legislation since 1845. ' +
+            'Digital archives incomplete; many documents are scanned PDFs without full-text search.',
+          languages: ['fr'],
+          status: 'PENDING ingestion',
         },
       ],
       database: {
@@ -63,6 +74,6 @@ export async function listSources(
         provision_count: safeCount(db, 'SELECT COUNT(*) as count FROM legal_provisions'),
       },
     },
-    _metadata: generateResponseMetadata(db),
+    _meta: generateResponseMetadata(db),
   };
 }

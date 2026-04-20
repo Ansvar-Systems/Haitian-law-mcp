@@ -3,6 +3,7 @@
  */
 
 import type Database from '@ansvar/mcp-sqlite';
+import { generateResponseMetadata } from '../utils/metadata.js';
 
 export interface AboutContext {
   version: string;
@@ -42,7 +43,7 @@ export function getAbout(db: InstanceType<typeof Database>, context: AboutContex
     stats,
     data_sources: [
       {
-        name: 'Direction des Franchises et du Numerique (DFRN)',
+        name: 'Direction des Affaires Juridiques et du Droit International (DFRN)',
         url: 'https://dfrn.gouv.ht',
         authority: 'Government of Haiti',
       },
@@ -57,5 +58,6 @@ export function getAbout(db: InstanceType<typeof Database>, context: AboutContex
       open_law: 'https://ansvar.eu/open-law',
       directory: 'https://ansvar.ai/mcp',
     },
+    _meta: generateResponseMetadata(db),
   };
 }
