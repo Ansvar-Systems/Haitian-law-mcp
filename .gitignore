@@ -1,12 +1,14 @@
 node_modules/
 dist/
+# Raw downloaded sources — bytes only, never commit
 data/source/
-data/seed/
-!data/.gitkeep
+# Built DB transient files (we commit the main data/database.db only)
+*.db-wal
+*.db-shm
+*.tmp.db
 .env
 .env.*
 *.tgz
 coverage/
 .vercel/
 .DS_Store
-*.db

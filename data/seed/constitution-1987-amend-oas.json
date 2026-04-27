@@ -1,0 +1,44 @@
+{
+  "id": "constitution-1987-amend-oas",
+  "type": "statute",
+  "title": "Amendement constitutionnel — Journal Officiel (Le Moniteur)",
+  "title_en": "Constitutional amendment journal",
+  "short_name": "Amendement constitutionnel",
+  "status": "in_force",
+  "issued_date": "2012-06-19",
+  "in_force_date": "2012-06-19",
+  "url": "http://www.oas.org/juridico/pdfs/mesicic4_hti_amend.pdf",
+  "provisions": [
+    {
+      "provision_ref": "art1",
+      "section": "Amendement constitutionnel — Journal Officiel (Le Moniteur)",
+      "title": "Est et demeure annulé l’Arrêté en date du 3 juin 2011 publié au Moniteur No 72 du lundi 6 juin",
+      "content": "Article 1.- Est et demeure annulé l’Arrêté en date du 3 juin 2011 publié au Moniteur No 72 du lundi 6 juin\n2011, rapportant la Loi Constitutionnelle votée en Assemblée Nationale le 9 mai 2011 et publiée au\nMoniteur No 58 du vendredi 13 mai 2011.",
+      "metadata": {
+        "confidence_tier": "blue",
+        "source_format": "pdf-text"
+      }
+    },
+    {
+      "provision_ref": "art2",
+      "section": "Amendement constitutionnel — Journal Officiel (Le Moniteur)",
+      "title": "Est et demeure reproduite pour erreurs matérielles la Loi Constitutionnelle votée en Assemblée",
+      "content": "Article 2.- Est et demeure reproduite pour erreurs matérielles la Loi Constitutionnelle votée en Assemblée\nNationale le 9 mai 2011 conformément aux correspondances y attachées.",
+      "metadata": {
+        "confidence_tier": "blue",
+        "source_format": "pdf-text"
+      }
+    },
+    {
+      "provision_ref": "art3",
+      "section": "Amendement constitutionnel — Journal Officiel (Le Moniteur)",
+      "title": "Le présent Arrêté sera publié et exécuté aux fins de droit.",
+      "content": "Article 3.- Le présent Arrêté sera publié et exécuté aux fins de droit.\nDonné au Palais National, à Port-au-Prince, le 19 juin 2012, An 209è de l’Indépendance.\nPar le Président:                                              Michel Joseph MARTELLY\n4               << LE MONITEUR >>      No. 96 - Mardi 19 Juin 2012\nLOI CONSTITUTIONNELLE\nPORTANT AMENDEMENT\nDE LA CONSTITUTION DE 1987\n(REPRODUCTION POUR ERREURS MATÉRIELLES)\nCORRESPONDANCES Y ATTACHÉES\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   5\n6   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   7\n8   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   9\n10   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   11\n12   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   13\n14   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   15\n16   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   17\n18   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   19\n20   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   21\n22   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   23\n24   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   25\n26   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   27\n28   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   29\n30   << LE MONITEUR >>   No. 96 - Mardi 19 Juin 2012\nNo. 96 - Mardi 19 Juin 2012   << LE MONITEUR >>   31\n32                                                  << LE MONITEUR >>                                    No. 96 - Mardi 19 Juin 2012\nPresses Nationales d’Haïti - 61, rue Goulard, Pétion-Ville, Haïti • Tél.: (509) 2941-1076 / 2941-7909 • E-mail : pndh-moniteur@hainet.net\nBoîte Postale 1746, Port-au-Prince, Haïti, Grandes Antilles.\nDépôt Légal: 85-01-027 Bibliothèque Nationale d’Haïti • ISSN 1683-2930.",
+      "metadata": {
+        "confidence_tier": "blue",
+        "source_format": "pdf-text"
+      }
+    }
+  ],
+  "definitions": []
+}
