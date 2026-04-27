@@ -1,47 +1,151 @@
-# sources.yml
+# sources.yml — Haiti Law MCP open-mirror catalogue
+#
+# Sovereign Haitian legal portals (dfrn.gouv.ht, justice.gouv.ht,
+# parliament.ht, senat.gouv.ht, bnht.gouv.ht, moniteur.gouv.ht) verified
+# DNS-dead 2026-04-27. This MCP ships exclusively from open historical
+# mirrors. See README.md and docs/handover/2026-04-27-haiti-source-scout.md.
 schema_version: "1.0"
 mcp_name: "Haitian Law MCP"
 jurisdiction: "HT"
+overall_confidence_tier: "amber"
+overall_confidence_note: |
+  MCP-wide tier is Amber because the bulk of the corpus is OCR-derived
+  from historical print scans (Codes Civil / Pénal / Procédure civile /
+  Instruction criminelle / Commerce / Travail). Per-provision
+  metadata.confidence_tier surfaces blue/amber granularity to the
+  customer-visible _citation envelope. The 1987 Constitution
+  (Constitute Project + PDBA mirror) and the 2004 OAS anti-corruption
+  decree are Blue.
 
 sources:
-  - name: "DFRN — Direction des Affaires Juridiques et du Droit International"
-    authority: "République d'Haïti — Ministère de la Justice et de la Sécurité Publique"
-    official_portal: "https://www.dfrn.gouv.ht"
-    canonical_identifier: "DFRN document reference"
-    retrieval_method: "HTML_SCRAPE"
-    api_documentation: "N/A — HTML scraping of public portal"
-    update_frequency: "monthly"
-    last_ingested: "2026-01-01"
+  - name: "Constitute Project — Haiti 1987 Constitution"
+    authority: "Constitute Project (Comparative Constitutions Project, University of Texas)"
+    official_portal: "https://www.constituteproject.org/constitution/Haiti_2012"
+    canonical_identifier: "Constitute Project HTML rendering, ?lang=en"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "N/A — direct HTML fetch + structured Article/Title/Chapter parsing"
+    update_frequency: "as-amended"
+    last_ingested: "2026-04-27"
+    confidence_tier: "blue"
     license_or_terms:
-      type: "Haitian Government Public Domain"
-      url: "https://www.dfrn.gouv.ht"
-      summary: "Haitian official legal publication portal; legislation is publicly accessible and may be freely used for research purposes"
+      type: "CC-BY-NC-SA 4.0"
+      url: "https://www.constituteproject.org/about"
+      summary: "Constitute Project republishes constitutional texts under CC-BY-NC-SA. Attribution: 'Constitute Project — Comparative Constitutions Project'."
     coverage:
-      scope: "Major Haitian legislation including the Constitution de la République d'Haïti (1987 as amended), Code Civil haïtien, Code Pénal, and major statutes accessible via the DFRN portal (~24 key instruments)"
-      limitations: "Haiti's legal infrastructure has significant gaps due to political instability and natural disasters; many laws exist only in print form in the Le Moniteur official gazette (paper); no comprehensive data protection law exists in Haiti as of 2026; coverage limited to digitally accessible instruments on DFRN"
-    languages:
-      - "fr"
-      - "ht"
+      scope: "1987 Constitution as amended 2012 (English structured rendering, ~298 articles + sub-articles)"
+      limitations: "English rendering only on Constitute; the canonical French text is captured separately via the PDBA mirror."
+    languages: ["en"]
 
-  - name: "Le Moniteur — Journal Officiel de la République d'Haïti"
-    authority: "République d'Haïti — Secrétairerie d'État à la Communication"
-    official_portal: "https://www.lemoniteurhaiti.com"
-    canonical_identifier: "Numéro du Moniteur + date"
-    retrieval_method: "HTML_SCRAPE"
-    api_documentation: "N/A"
-    update_frequency: "irregular"
-    last_ingested: "PENDING"
+  - name: "PDBA Georgetown — Constitution 1987 (French)"
+    authority: "Political Database of the Americas (Georgetown University)"
+    official_portal: "https://pdba.georgetown.edu/Constitutions/Haiti/"
+    canonical_identifier: "constitution1987fr.pdf"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "N/A — direct PDF download, text-layered"
+    update_frequency: "as-amended"
+    last_ingested: "2026-04-27"
+    confidence_tier: "blue"
     license_or_terms:
-      type: "Haitian Government Public Domain"
-      url: "https://www.lemoniteurhaiti.com"
-      summary: "Official government gazette; primary authoritative source for all promulgated Haitian legislation"
+      type: "Public mirror of Haitian government text"
+      url: "https://pdba.georgetown.edu"
+      summary: "PDBA hosts national constitutions for academic research; underlying text is Haitian government public domain."
     coverage:
-      scope: "All officially promulgated legislation from publication date; historical issues since 1845"
-      limitations: "Digital archives are incomplete; many issues available only as scanned PDFs without full-text search; publication has been irregular due to political crises"
-    languages:
-      - "fr"
+      scope: "Canonical French text of the 1987 Constitution as amended 2012, text-layered PDF"
+      limitations: "Same text as Constitute Project, French language only."
+    languages: ["fr"]
+
+  - name: "OAS juridico — Constitutional amendment journal & anti-corruption décret"
+    authority: "Organization of American States (OAS) — Department of Legal Cooperation"
+    official_portal: "http://www.oas.org/juridico/"
+    canonical_identifier: "MESICIC document references"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "N/A — direct PDF download"
+    update_frequency: "static historical archive"
+    last_ingested: "2026-04-27"
+    confidence_tier: "blue"
+    license_or_terms:
+      type: "OAS Public Documents"
+      url: "http://www.oas.org/en/sla/dil/access_information.asp"
+      summary: "OAS juridico publishes member-state legal instruments for the MESICIC anti-corruption mechanism; underlying texts are public-domain Haitian government acts."
+    coverage:
+      scope: "Constitutional amendment Arrêté (19 June 2012) + Décret du 8 septembre 2004 sur la prévention et la répression de la corruption"
+      limitations: "Amendment journal contains scanned attachment images that have no text-layer; only the introductory Arrêté text is captured (~3 articles)."
+    languages: ["fr"]
+
+  - name: "WIPO Lex — IP statutes package"
+    authority: "World Intellectual Property Organization (WIPO)"
+    official_portal: "https://www.wipo.int/wipolex/en/main/legislation"
+    canonical_identifier: "WIPO Lex legislation IDs 2179 / 2180 / 2182 / 5091"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "https://www.wipo.int/wipolex/en/api"
+    update_frequency: "as-amended"
+    last_ingested: "PENDING_INACCESSIBLE_2026_04_27"
+    confidence_tier: "blue"
+    license_or_terms:
+      type: "WIPO Lex Public Information"
+      url: "https://www.wipo.int/wipolex/en/about"
+      summary: "WIPO Lex republishes member-state IP legislation under a public-information regime; underlying texts are Haitian government public domain."
+    coverage:
+      scope: "Patents 1922 (id 2179), Trademarks 1954 (id 2180), Trademarks Decree 1960 (id 2182), Copyright 2005 (id 5091)"
+      limitations: "WIPO Lex was unreachable from the 2026-04-27 build host (www.wipo.int connection timeouts; wipolex-res.wipo.int 500 Internal Server Error). Sources are registered but landed as classification=inaccessible. Re-attempt at next ingest cycle."
+    languages: ["fr", "en"]
+
+  - name: "Internet Archive — Historical Haitian codes (DJVU TXT)"
+    authority: "Internet Archive (archive.org) — community-uploaded scans of historical print editions"
+    official_portal: "https://archive.org"
+    canonical_identifier: "IA item identifiers (codecivildhaitia01hait, haiti_penal_code, codedeprocdure00hait, codedinstruction00hait, codedecommercedh05785hait, lesconstitutions00hait)"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "https://archive.org/services/docs/api/metadata.html"
+    update_frequency: "static historical archive"
+    last_ingested: "2026-04-27"
+    confidence_tier: "amber"
+    license_or_terms:
+      type: "Public Domain (historical Haitian government acts, scanned print editions)"
+      url: "https://archive.org/about/terms.php"
+      summary: "Internet Archive hosts community-uploaded scans of public-domain historical legal print editions. Pre-OCR'd DJVU TXT files are downloaded directly; we do not re-OCR."
+    coverage:
+      scope: "Code Civil annoté 1986 ed. (Borno reprint), Code Pénal annoté modern, Code de procédure civile 1963, Code d'instruction criminelle, Code de commerce, Constitutions historiques 1801-1885"
+      limitations: |
+        OCR character-error rates have not been independently validated.
+        The lesconstitutions00hait compendium concatenates 11 different
+        constitutions (1801, 1805, 1806, 1807, 1811, 1816, 1843, 1846,
+        1849, 1867, 1879, 1885) — articles from later constitutions
+        overwrite earlier same-numbered articles after build-db dedup.
+        Per-provision confidence_tier=amber is mandatory; treat
+        citations as starting points for primary-source confirmation.
+    languages: ["fr"]
+
+  - name: "haiti-now.org — Code du Travail (Duvalier 1961)"
+    authority: "haiti-now.org (NGO public legal mirror)"
+    official_portal: "https://www.haiti-now.org/"
+    canonical_identifier: "Code-du-travail-Francois-Duvalier-1961.pdf"
+    retrieval_method: "HTTP_FETCH"
+    api_documentation: "N/A — direct PDF download"
+    update_frequency: "static historical archive"
+    last_ingested: "2026-04-27"
+    confidence_tier: "amber"
+    license_or_terms:
+      type: "Public Mirror"
+      url: "https://www.haiti-now.org"
+      summary: "haiti-now.org republishes Haitian historical legal acts; underlying text is public-domain Haitian government act."
+    coverage:
+      scope: "Code du Travail (12 September 1961, Duvalier era) — full text"
+      limitations: "OCR text-layered PDF; OCR confidence varies. Marked confidence_tier=amber. Subsequent labour code amendments (1980s, 2010s) NOT included — no public mirror found."
+    languages: ["fr"]
+
+# Out of scope (disclosed gaps; not silent omissions)
+not_covered:
+  - "Post-2010 statutes (Lois) — no public mirror found"
+  - "Le Moniteur (gazette) issues newer than the 2012 OAS amendment archive"
+  - "Official jurisprudence (Cour de Cassation decisions)"
+  - "Sectoral regulators (BRH banking, ULCC current acts beyond 2004 décret, CTMO-HOPE)"
+  - "Departmental and local legislation"
+  - "Creole-language (Kreyòl ayisyen) official text — all confirmed source material is French"
+  - "Code Rural and Code Fiscal (no public mirror found in 2026-04-27 scout)"
 
 data_freshness:
   automated_checks: true
   check_frequency: "weekly"
-  last_verified: "2026-01-01"
+  last_verified: "2026-04-27"
+  posture: "open-mirror-only"
+  sovereign_portal_status: "DNS-dead 2026-04-27"

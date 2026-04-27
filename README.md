@@ -34,44 +34,15 @@ This MCP server makes Haitian law **searchable, cross-referenceable, and AI-read
 
 ## Quick Start
 
-### Use Remotely (No Install Needed)
+### Use via the Ansvar Gateway (B2B, OAuth)
 
-> Connect directly to the hosted version -- zero dependencies, nothing to install.
-
-**Endpoint:** `https://mcp.ansvar.eu/law-ht/mcp`
+> The public MCP server (`mcp.ansvar.eu`) was decommissioned 2026-04-23. External access is now via the Ansvar MCP Gateway (`gateway.ansvar.eu`, OAuth 2.1) for paid tiers, or via npm for local stdio.
 
 | Client | How to Connect |
 |--------|---------------|
-| **Claude.ai** | Settings > Connectors > Add Integration > paste URL |
-| **Claude Code** | `claude mcp add haitian-law --transport http https://mcp.ansvar.eu/law-ht/mcp` |
-| **Claude Desktop** | Add to config (see below) |
-| **GitHub Copilot** | Add to VS Code settings (see below) |
-
-**Claude Desktop** -- add to `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "haitian-law": {
-      "type": "url",
-      "url": "https://mcp.ansvar.eu/law-ht/mcp"
-    }
-  }
-}
-```
-
-**GitHub Copilot** -- add to VS Code `settings.json`:
-
-```json
-{
-  "github.copilot.chat.mcp.servers": {
-    "haitian-law": {
-      "type": "http",
-      "url": "https://mcp.ansvar.eu/law-ht/mcp"
-    }
-  }
-}
-```
+| **Claude.ai** | Settings > Connectors > Add Integration > `https://gateway.ansvar.eu` |
+| **Claude Code** | `claude mcp add ansvar-gateway --transport http https://gateway.ansvar.eu` |
+| **GitHub Copilot** | Add gateway URL to VS Code `settings.json` |
 
 ### Use Locally (npm)
 
@@ -130,18 +101,31 @@ Haitian Creole (Kreyòl ayisyen) examples:
 
 ---
 
-## What's Included
+## Coverage (open-mirror partial corpus)
 
 | Category | Count | Details |
 |----------|-------|---------|
-| **Statutes** | Early access | Ingestion pipeline active; content being added |
-| **Provisions** | Growing | Full-text search available as content is indexed |
-| **Database Size** | ~0.1 MB | Initial placeholder; grows with ingestion |
-| **Source** | dfrn.gouv.ht | DFRN Ministry of Justice official database |
+| **Statutes ingested** | 11 | 1987 Constitution (EN + FR), 6 historical codes, Code du Travail 1961, anti-corruption décret 2004, constitutional amendment journal 2012, historical constitutions compendium |
+| **Provisions** | ~3,800 | After dedup; full-text search via SQLite FTS5 |
+| **Definitions** | 12 | Auto-extracted from French civil-law definition patterns |
+| **Database size** | ~7 MB | data/database.db |
+| **Confidence tier (overall)** | **Amber** | Bulk of corpus is OCR-derived from historical print scans |
 
-> **Honest note on coverage:** The Haitian Law MCP is in early access. Haiti's official legal database (dfrn.gouv.ht) presents access and digitization challenges -- many texts are available only as PDF scans, and the portal has intermittent availability. We are actively building the ingestion pipeline. The MCP infrastructure is live and the tools work; the dataset grows as ingestion completes. Check back for updates, or contribute to accelerate coverage.
+### Source posture (mandatory disclosure)
 
-**Verified data only** -- all ingested content is sourced from official sources (dfrn.gouv.ht). Zero LLM-generated content.
+> Haiti's sovereign legal portals (`dfrn.gouv.ht`, `justice.gouv.ht`, `parliament.ht`, `senat.gouv.ht`, `bnht.gouv.ht`, `moniteur.gouv.ht`) are **DNS-dead as of 2026-04-27** — gone, not geo-restricted. This MCP ships from open historical mirrors only:
+>
+> - **WIPO Lex** — IP statutes (patents 1922, trademarks 1954/1960, copyright 2005). *Currently registered as `inaccessible` — WIPO Lex was unreachable from the 2026-04-27 build host; will retry next cycle.*
+> - **Internet Archive** — historical codes (Civil, Pénal, Procédure civile, Instruction criminelle, Commerce, Constitutions historiques 1801-1885). Pre-OCR'd DJVU TXT.
+> - **OAS juridico** — 1987 Constitution amendment journal (2012), Décret du 8 septembre 2004 sur la prévention et la répression de la corruption.
+> - **Constitute Project + PDBA Georgetown mirror** — 1987 Constitution (English structured + French canonical text).
+> - **haiti-now.org** — Code du Travail (Duvalier, 1961).
+>
+> **NOT covered:** post-2010 statutes (no public mirror found), the current Code de procédure civile if revised after the 1963 IA holding, gazette (Le Moniteur) issues newer than the OAS amendment archive, official jurisprudence, sectoral regulators (BRH banking, ULCC current acts beyond the 2004 décret), departmental and local legislation, and any Creole-language official text (all confirmed source material is French).
+>
+> **OCR disclosure:** The Code Civil, Code Pénal, Code de procédure civile, Code d'instruction criminelle, Code de commerce, and Code du Travail are derived from OCR'd scans of historical print editions. The MCP marks each provision `confidence_tier: amber` and surfaces it in the citation envelope. **OCR character-error rates have not been independently validated; treat citations as starting points for primary-source confirmation, not as authoritative renderings.** The 1987 Constitution (via Constitute Project + PDBA mirror) and the 2004 anti-corruption décret ship `confidence_tier: blue` because the underlying text is text-layered.
+
+**Verified data only** — all ingested content comes from the open historical mirrors named above. Zero LLM-generated content. Per-provision provenance is exposed via `metadata.confidence_tier` and `metadata.source_format`.
 
 ---
 
@@ -229,23 +213,29 @@ The international alignment tools allow you to explore these relationships -- ch
 
 ## Data Sources & Freshness
 
-All content is sourced from authoritative Haitian legal databases:
+All content is sourced from open historical mirrors, since Haiti's sovereign legal portals are DNS-dead (verified 2026-04-27):
 
-- **[DFRN -- Direction de la Formation et de la Recherche Normative](https://dfrn.gouv.ht)** -- Ministry of Justice official legal database (primary source)
-- **[Le Moniteur](https://www.lemoniteur.ht)** -- Official Haitian gazette for promulgated legislation
-- **[Ministère de la Justice et de la Sécurité Publique](https://www.mjsp.gouv.ht)** -- Ministry of Justice portal
+- **Constitute Project** — 1987 Constitution (English structured rendering, CC-BY-NC-SA)
+- **PDBA Georgetown** — 1987 Constitution (French canonical text, public mirror)
+- **OAS juridico** — Constitutional amendment journal 2012, anti-corruption décret 2004
+- **WIPO Lex** — IP statutes package (currently inaccessible from build host)
+- **Internet Archive** — historical codes via pre-OCR'd DJVU TXT (Code Civil, Pénal, Procédure civile, Instruction criminelle, Commerce, Constitutions historiques)
+- **haiti-now.org** — Code du Travail (Duvalier 1961, public mirror)
+
+See `sources.yml` for full per-source license, scope, and limitation entries.
 
 ### Data Provenance
 
 | Field | Value |
 |-------|-------|
-| **Primary source** | dfrn.gouv.ht |
-| **Retrieval method** | Structured ingestion from official government sources |
-| **Languages** | French (official) / Haitian Creole (Kreyòl ayisyen, co-official) |
-| **Coverage** | Growing; early access build |
-| **Database size** | ~0.1 MB (growing with ingestion) |
+| **Posture** | Open-mirror partial corpus; sovereign portals DNS-dead 2026-04-27 |
+| **Retrieval method** | Direct HTTP fetch of HTML / text-layered PDF / IA pre-OCR'd DJVU TXT |
+| **Languages** | French (all confirmed source material is French; English available for the Constitute rendering of the 1987 Constitution) |
+| **Coverage** | 11 instruments, ~3,800 provisions (Tier D — partial historical corpus) |
+| **Database size** | ~7 MB |
+| **Confidence tier** | Amber (MCP-wide) — bulk OCR-derived; per-provision `metadata.confidence_tier` distinguishes blue/amber |
 
-**Verified data only** -- all ingested content comes from official sources. Zero LLM-generated content.
+**Verified data only** — all ingested content comes from the open mirrors named above. Zero LLM-generated content.
 
 ---
 

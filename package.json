@@ -1,6 +1,6 @@
 {
   "name": "@ansvar/haitian-law-mcp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "mcpName": "eu.ansvar/haitian-law-mcp",
   "description": "Haiti law database -- legislation with full-text search and citation validation",
   "author": "Ansvar Systems <hello@ansvar.eu>",
