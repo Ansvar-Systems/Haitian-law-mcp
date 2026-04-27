@@ -1,16 +1,16 @@
 {
   "$schema": "./golden-tests.schema.json",
   "version": "1.0",
-  "mcp_name": "El Salvador Law MCP",
-  "description": "Golden contract tests for the El Salvador Law MCP",
+  "mcp_name": "Haitian Law MCP",
+  "description": "Golden contract tests for the Haitian Law MCP",
   "tests": [
     {
-      "id": "SV-001",
+      "id": "HT-001",
       "category": "search",
-      "description": "Search for 'datos personales' returns results",
+      "description": "Search for 'travail' returns results from Code du travail 1961",
       "tool": "search_legislation",
       "input": {
-        "query": "datos personales",
+        "query": "travail",
         "limit": 5
       },
       "assertions": {
@@ -20,9 +20,24 @@
       }
     },
     {
-      "id": "SV-002",
+      "id": "HT-002",
+      "category": "search",
+      "description": "Search for 'constitution' returns results from 1987 Constitution",
+      "tool": "search_legislation",
+      "input": {
+        "query": "constitution",
+        "limit": 5
+      },
+      "assertions": {
+        "result_not_empty": true,
+        "min_results": 1,
+        "text_not_empty": true
+      }
+    },
+    {
+      "id": "HT-003",
       "category": "negative",
-      "description": "Negative test: non-existent law",
+      "description": "Negative test: non-existent law returns gracefully",
       "tool": "get_provision",
       "input": {
         "document_id": "NONEXISTENT_LAW_999",
