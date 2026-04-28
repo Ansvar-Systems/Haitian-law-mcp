@@ -136,6 +136,10 @@ function decodeEntities(text: string): string {
 
 function cleanText(text: string): string {
   return decodeEntities(text)
+    // Strip HTML comments first — Constitute Project pages embed
+    // <!--Section: section/N, type: body--> markers inline with text.
+    // Must come before tag-strip because comments don't match the tag regex.
+    .replace(/<!--[\s\S]*?-->/g, '')
     // Only strip recognisable HTML tags; loose `<[^>]*>` corrupts OCR text
     // that contains stray `<` glyphs (greedy match eats real prose). Cf.
     // Code Civil OCR artefacts where '<' appears as a misread char.
